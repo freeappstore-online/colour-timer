@@ -1,0 +1,14 @@
+{
+  "name": "colour-timer",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": { "node": ">=22" },
+  "pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+  "scripts": {
+    "dev": "pnpm --filter @colour-timer/web dev",
+    "build": "pnpm --filter @colour-timer/web build",
+    "preview": "pnpm --filter @colour-timer/web preview",
+    "typecheck": "pnpm --filter @colour-timer/web exec tsc -b",
+    "test": "pnpm --filter @colour-timer/web test"
+  }
+}
