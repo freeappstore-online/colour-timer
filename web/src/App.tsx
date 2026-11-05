@@ -132,8 +132,7 @@ function formatTime(totalSeconds: number): string {
 
 function getPatternStyle(
   patternValue: string,
-  patternOpacity: number,
-  textColor: string
+  patternOpacity: number
 ): React.CSSProperties {
   const p = PATTERNS.find((p) => p.value === patternValue);
   if (!p || p.value === "none" || !p.css) return {};
