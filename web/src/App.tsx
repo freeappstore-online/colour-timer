@@ -224,23 +224,25 @@ export default function App() {
 
   useEffect(() => {
     if (running) {
+      // Measure wall-clock time: intervals are throttled or paused in background tabs.
+      const startedAt = Date.now();
+      const startElapsed = elapsed;
+      const startCountdown = countdown;
       intervalRef.current = setInterval(() => {
+        const secs = Math.floor((Date.now() - startedAt) / 1000);
         if (mode === "stopwatch") {
-          setElapsed((e) => e + 1);
+          setElapsed(startElapsed + secs);
+        } else if (startCountdown - secs <= 0) {
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
+          setCountdown(0);
+          setRunning(false);
+          setFinished(true);
+          triggerExplosion();
         } else {
-          setCountdown((c) => {
-            if (c <= 1) {
-              clearInterval(intervalRef.current!);
-              intervalRef.current = null;
-              setRunning(false);
-              setFinished(true);
-              triggerExplosion();
-              return 0;
-            }
-            return c - 1;
-          });
+          setCountdown(startCountdown - secs);
         }
-      }, 1000);
+      }, 250);
     }
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
